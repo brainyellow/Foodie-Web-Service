@@ -1,1 +1,2 @@
-readme
+**HOW TO RUN**
+python restaurantpy
