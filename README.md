@@ -1,3 +1,3 @@
 **HOW TO RUN**
 
-python restaurantpy
+python restaurant.py
