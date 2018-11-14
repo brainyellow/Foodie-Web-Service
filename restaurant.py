@@ -1,8 +1,9 @@
-from flask import Flask, jsonify, render_template, request, redirect, url_for
+from flask import Flask, jsonify, render_template, request, redirect, url_for, flash
 from geocodio import GeocodioClient
 from pyzomato import Pyzomato
 
 app = Flask(__name__)
+app.secret_key = 'secret lol!'
 geocod = GeocodioClient('b4ee25bee55b1c4242535b871e3ba7aa031bb7e')
 zomato = Pyzomato('14b0003fd0c86f9a5b8d79fba7012571')
 
@@ -11,7 +12,12 @@ zomato = Pyzomato('14b0003fd0c86f9a5b8d79fba7012571')
 def mainPage():
     if request.method == 'POST':
         address = request.form['address']
-        return redirect(url_for('restaurants', address=address))
+        try:
+            test = geocod.geocode(address).coords
+            return redirect(url_for('restaurants', address=address))
+        except:
+            flash('Please enter a valid address')
+            return redirect('/')
     else:
         return render_template('index.html')
 
